@@ -75,8 +75,6 @@ sub getMetrics{
    $curl->setopt(CURLOPT_SSL_VERIFYHOST, 0);
    $curl->setopt(CURLOPT_URL, $URL);
 
-   print $URL;
-
    my $response_body;
    $curl->setopt(CURLOPT_WRITEDATA,\$response_body);
 
