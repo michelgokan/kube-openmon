@@ -120,6 +120,7 @@ sub generateQuery{
 if( validateEnvironmentVariables() ){
    printKubernetesEnvironmentVariables();
    my $response_body = getMetrics();
+   print $response_body;
    my $query = generateQuery($response_body);
-   print $query;
+   #print $query;
 }
