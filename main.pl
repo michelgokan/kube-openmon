@@ -9,6 +9,7 @@ my $GLOBAL_TIMESTAMP;
 my $KUBERNETES_TOKEN;
 my $KUBERNETES_ADDRESS;
 my $KUBERNETES_PORT;
+my $LOG_LEVEL=1;
 
 sub validateEnvironmentVariables{
    if(!defined $ENV{'KUBERNETES_CUSTOM_TOKEN'}){
@@ -84,7 +85,9 @@ sub getMetrics{
    $GLOBAL_TIMESTAMP=~s/\.//g;
       
    if ($retcode == 0) {
-      print("Transfer went ok\n");
+      if( $LOG_LEVEL > 0 ){
+         print("Transfer went ok\n");
+      }
       my $response_code = $curl->getinfo(CURLINFO_HTTP_CODE);
 
       if( $response_code != 200 ){
@@ -100,8 +103,7 @@ sub getMetrics{
 sub generateQuery{
    my $response_body = $_[0];
    
-   my $query = "CREATE DATABASE IF NOT EXISTS $ENV{'INFLUXDB_DATABASE'}\n";
-   $query .= "USE $ENV{'INFLUXDB_DATABASE'}\n";
+   my $query = "USE $ENV{'INFLUXDB_DATABASE'}\n";
 
    foreach my $line (split /\n/ ,$response_body) {
       for ($line) {
@@ -117,10 +119,30 @@ sub generateQuery{
    return $query;
 }
 
+sub pushToInfluxDB{
+   my $insert_queries = $_[0];
+   
+   my $ix = InfluxDB->new(
+         host     => $ENV{'INFLUXDB_ADDRESS'},
+         port     => $ENV{'INFLUXDB_PORT'},
+         username => $ENV{'INFLUXDB_USERNAME'},
+         password => $ENV{'INFLUXDB_PASSWORD'},
+         database => $ENV{'INFLUXDB_DATABASE'}
+   );
+
+   $ix->query($insert_queries) or die "query: " . $ix->errstr;
+}
+
 if( validateEnvironmentVariables() ){
-   printKubernetesEnvironmentVariables();
+   if( $LOG_LEVEL > 0 ){
+      printKubernetesEnvironmentVariables();
+   }
    my $response_body = getMetrics();
-   print $response_body;
    my $query = generateQuery($response_body);
-   #print $query;
+   if( $LOG_LEVEL > 0 ){
+      open(my $fh, '>', 'query.log');
+      print $fh $query;
+      close $fh;
+   }
+   pushToInfluxDB($query);
 }
