@@ -108,7 +108,6 @@ sub generateQuery{
 
 if( validateEnvironmentVariables() ){
    my $response_body = getMetrics();
-   echo $
    my $query = generateQuery($response_body);
    print $query;
 }
