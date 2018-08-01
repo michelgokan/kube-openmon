@@ -4,7 +4,6 @@ use warnings;
 use Time::HiRes qw(time);
 use WWW::Curl::Easy;   
 use MIME::Base64 ();
-use Proc::Daemon;
 
 my $GLOBAL_TIMESTAMP;
 my $KUBERNETES_TOKEN;
