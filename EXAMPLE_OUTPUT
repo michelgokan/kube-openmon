@@ -1,12 +1,3 @@
-$KUBERNETES_TOKEN=eyJhbGciOiJSUzI1NiIsImtpZCI6IiJ9.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJkZWZhdWx0Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZWNyZXQubmFtZSI6ImthdWFkbWluLXRva2VuLW1zZ2Y3Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQubmFtZSI6ImthdWFkbWluIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQudWlkIjoiYzg0ZTM5MDktN2Y5NC0xMWU4LWE0Y2ItZmExNjNlNmI2NTk3Iiwic3ViIjoic3lzdGVtOnNlcnZpY2VhY2NvdW50OmRlZmF1bHQ6a2F1YWRtaW4ifQ.MixqWWVr2C4qy_44hIr1bZo5dkSqqppKEFyY2rMxi7a2xFUr_MsNkp5gB81drbtSiFUEeN51pG25E5HGeoHHwbE-dpjR17Mp4TvTwaPLT63sRruzBy7uxeD1JaEw6gedKASBrOVDt3vu-7X7NKYac3aFk39kuoK5IlJN0oX4AstDJHSCx1yYwfeSW6sY9AnJvGXdFJ-vnA2ToQnrEz-Ytv_yNBo0pdb2zzIBE6KMecGWlQqEm2n6BIiSaDtAXNZKHgPFepOJA-5aGLsyqNW4R_JnaOlFhSVp4LvsTJI_JjVIVQIfMcR81JLGdkxNtessPH8JVfU9Ocy_Y3GMEyu7Lw
-$KUBERNETES_ADDRESS=10.96.0.1
-$KUBERNETES_PORT=443
-Transfer went ok
-HTTP/1.1 200 OK
-Content-Type: text/plain; version=0.0.4
-Date: Tue, 31 Jul 2018 14:34:50 GMT
-Transfer-Encoding: chunked
-
 # HELP cadvisor_version_info A metric with a constant '1' value labeled by kernel version, OS version, docker version, cadvisor version & cadvisor revision.
 # TYPE cadvisor_version_info gauge
 cadvisor_version_info{cadvisorRevision="",cadvisorVersion="",dockerVersion="1.13.1",kernelVersion="4.4.0-130-generic",osVersion="Ubuntu 16.04.3 LTS"} 1

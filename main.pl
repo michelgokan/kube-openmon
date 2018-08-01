@@ -3,7 +3,8 @@ use strict;
 use warnings;
 use Time::HiRes qw(time);
 use WWW::Curl::Easy;   
-use InfluxDB;
+use MIME::Base64 ();
+use Proc::Daemon;
 
 my $GLOBAL_TIMESTAMP;
 my $KUBERNETES_TOKEN;
@@ -103,16 +104,19 @@ sub getMetrics{
 sub generateQuery{
    my $response_body = $_[0];
    
-   my $query = "USE $ENV{'INFLUXDB_DATABASE'}\n";
+   my $query = "";
 
    foreach my $line (split /\n/ ,$response_body) {
       for ($line) {
          if (/^([A-Za-z0-9_-]+?)\{(.*?)\}\s+(.*?)$/) {
+            my $measurement = $1;
             my $val = sprintf("%.20g", $3);
-            $query .= "INSERT $1,node_name=$ENV{NODE_NAME},$2 value=$val $GLOBAL_TIMESTAMP\n";
+            my $metadata = $2;
+            $metadata =~ s/\s/_/g;
+            $query .= "$measurement,node_name=$ENV{NODE_NAME},$metadata value=$val $GLOBAL_TIMESTAMP\n";
          } elsif(/^([A-Za-z0-9_-]+?)\s+(.*?)$/) {
             my $val = sprintf("%.20g", $2);
-            $query .= "INSERT $1,node_name=$ENV{NODE_NAME} value=$val $GLOBAL_TIMESTAMP\n";
+            $query .= "$1,node_name=$ENV{NODE_NAME} value=$val $GLOBAL_TIMESTAMP\n";
          }
       }
    }
@@ -120,29 +124,58 @@ sub generateQuery{
 }
 
 sub pushToInfluxDB{
-   my $insert_queries = $_[0];
+   my $query = $_[0];
+   my $curl = WWW::Curl::Easy->new;
+   my $URL = "http://$ENV{'INFLUXDB_ADDRESS'}:$ENV{'INFLUXDB_PORT'}/write?db=$ENV{'INFLUXDB_DATABASE'}";
    
-   my $ix = InfluxDB->new(
-         host     => $ENV{'INFLUXDB_ADDRESS'},
-         port     => $ENV{'INFLUXDB_PORT'},
-         username => $ENV{'INFLUXDB_USERNAME'},
-         password => $ENV{'INFLUXDB_PASSWORD'},
-         database => $ENV{'INFLUXDB_DATABASE'}
-   );
+   if( $ENV{'INFLUXDB_USERNAME'} ne "" && $ENV{'INFLUXDB_PASSWORD'} ne "" ){
+      my @headers  = ("Authorization: Basic ".MIME::Base64::encode($ENV{'INFLUXDB_USERNAME'}.":".$ENV{'INFLUXDB_PASSWORD'}));
+      $curl->setopt(CURLOPT_HTTPHEADER, \@headers);
+   }
 
-   $ix->query($insert_queries) or die "query: " . $ix->errstr;
+   $curl->setopt(CURLOPT_POST,1);
+   $curl->setopt(CURLOPT_POSTFIELDS,$query);
+   $curl->setopt(CURLOPT_HEADER,1);
+   $curl->setopt(CURLOPT_SSL_VERIFYPEER, 0);
+   $curl->setopt(CURLOPT_SSL_VERIFYHOST, 0);
+   $curl->setopt(CURLOPT_URL, $URL);
+
+   my $response_body;
+   $curl->setopt(CURLOPT_WRITEDATA,\$response_body);
+
+   my $retcode = $curl->perform;
+   $GLOBAL_TIMESTAMP=sprintf("%.9f",time);
+   $GLOBAL_TIMESTAMP=~s/\.//g;
+      
+   if ($retcode == 0) {
+      if( $LOG_LEVEL > 0 ){
+         print("Transfer went ok\n");
+      }
+      my $response_code = $curl->getinfo(CURLINFO_HTTP_CODE);
+
+      if( $response_code != 200 || $response_code != 204 ){
+         die("Error with response code: $response_code\n");
+      }
+   } else {
+      die("An error happened: $retcode ".$curl->strerror($retcode)." ".$curl->errbuf."\n");
+   }
+
+   return $response_body;
 }
 
 if( validateEnvironmentVariables() ){
    if( $LOG_LEVEL > 0 ){
       printKubernetesEnvironmentVariables();
    }
+
    my $response_body = getMetrics();
    my $query = generateQuery($response_body);
+
    if( $LOG_LEVEL > 0 ){
       open(my $fh, '>', 'query.log');
       print $fh $query;
       close $fh;
    }
+   
    pushToInfluxDB($query);
 }
