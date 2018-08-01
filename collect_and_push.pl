@@ -9,7 +9,7 @@ my $GLOBAL_TIMESTAMP;
 my $KUBERNETES_TOKEN;
 my $KUBERNETES_ADDRESS;
 my $KUBERNETES_PORT;
-my $LOG_LEVEL=1;
+my $LOG_LEVEL=0;
 
 sub validateEnvironmentVariables{
    if(!defined $ENV{'KUBERNETES_CUSTOM_TOKEN'}){
@@ -55,6 +55,10 @@ sub validateEnvironmentVariables{
 
    if(!defined $ENV{'NODE_NAME'}){
       die("\$NODE_NAME is not set!"); 
+   }
+
+   if(defined $ENV{'LOG_LEVEL'}){
+      $LOG_LEVEL=$ENV{'LOG_LEVEL'});
    }
 
    return 1;

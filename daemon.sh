@@ -1,6 +1,13 @@
 #!/bin/bash
+
+if [[ -z "${MONITORING_INTERVAL}" ]]; then
+   SLEEP_TIME="1"
+else
+   SLEEP_TIME="${MONITORING_INTERVAL}"
+fi
+
 while :
 do
    perl collect_and_push.pl
-   sleep 1
+   sleep $SLEEP_TIME
 done
