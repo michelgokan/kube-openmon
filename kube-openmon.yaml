@@ -23,6 +23,12 @@ spec:
           env:
            - name: MONITORING_INTERVAL
              value: "1"
+           - name: LOG_LEVEL
+             value: "1"
+#           - name: KUBERNETES_CUSTOM_ADDRESS
+#             value: ""
+#           - name: KUBERNETES_CUSTOM_PORT
+#             value: ""
            - name: INFLUXDB_ADDRESS
              value: "172.16.16.242"
            - name: INFLUXDB_PORT

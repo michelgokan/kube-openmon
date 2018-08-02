@@ -168,14 +168,14 @@ sub pushToInfluxDB{
 }
 
 if( validateEnvironmentVariables() ){
-   if( $LOG_LEVEL > 0 ){
+   if( $LOG_LEVEL > 1 ){
       printKubernetesEnvironmentVariables();
    }
 
    my $response_body = getMetrics();
    my $query = generateQuery($response_body);
 
-   if( $LOG_LEVEL > 0 ){
+   if( $LOG_LEVEL > 1 ){
       open(my $fh, '>', 'query.log');
       print $fh $query;
       close $fh;
