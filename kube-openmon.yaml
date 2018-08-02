@@ -3,6 +3,9 @@ kind: DaemonSet
 metadata:
   name: kube-openmon
   namespace: kube-system
+  labels:
+    name: kube-openmon
+    app: kube-openmon
 spec:
   selector:
     matchLabels:
@@ -11,9 +14,11 @@ spec:
     metadata:
       labels:
         name: kube-openmon
+        namespace: kube-system
     spec:
       nodeSelector:
-        app: kube-openmon
+        beta.kubernetes.io/os: linux
+        beta.kubernetes.io/arch: amd64
       containers:
         - name: kube-openmon
           image: michelgokan/kube-openmon

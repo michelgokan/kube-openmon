@@ -1,4 +1,6 @@
-FROM ubuntu:18.04
+FROM perl:latest
+MAINTAINER Michel Gokan michel@gokan.me
+RUN curl -L http://cpanmin.us | perl - App::cpanminus
 COPY collect_and_push.pl daemon.sh /opt/
-CMD cpan install WWW::Curl::Easy
-CMD /opt/daemon.sh
+RUN cpanm WWW::Curl::Easy
+RUN /opt/daemon.sh

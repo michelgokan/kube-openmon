@@ -8,6 +8,6 @@ fi
 
 while :
 do
-   perl collect_and_push.pl
+   perl /opt/collect_and_push.pl
    sleep $SLEEP_TIME
 done
