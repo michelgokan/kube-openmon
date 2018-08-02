@@ -1,5 +1,5 @@
 apiVersion: apps/v1
-kind: DaemonSet
+kind: Deployment
 metadata:
   name: kube-openmon
   namespace: kube-system
@@ -7,6 +7,7 @@ metadata:
     name: kube-openmon
     app: kube-openmon
 spec:
+  replicas: 1
   selector:
     matchLabels:
       name: kube-openmon
@@ -16,17 +17,10 @@ spec:
         name: kube-openmon
         namespace: kube-system
     spec:
-      nodeSelector:
-        beta.kubernetes.io/os: linux
-        beta.kubernetes.io/arch: amd64
       containers:
         - name: kube-openmon
           image: michelgokan/kube-openmon
           env:
-           - name: NODE_NAME
-             valueFrom:
-               fieldRef:
-                 fieldPath: spec.nodeName
            - name: MONITORING_INTERVAL
              value: "1"
            - name: INFLUXDB_ADDRESS

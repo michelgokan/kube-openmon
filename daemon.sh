@@ -6,8 +6,14 @@ else
    SLEEP_TIME="${MONITORING_INTERVAL}"
 fi
 
+nodes=`curl https://${KUBERNETES_PORT_443_TCP_ADDR}:${KUBERNETES_PORT_443_TCP_PORT}/api/v1/nodes/ --header "Authorization: Bearer $TOKEN" --insecure | awk '$1 ~ /^\"name\":$/{ gsub("\"","",$2); gsub(",","",$2); print $2 }'`
+
+
 while :
 do
-   perl /opt/collect_and_push.pl
+   for word in $nodes
+   do
+      perl /opt/collect_and_push.pl $word & 
+   done
    sleep $SLEEP_TIME
 done

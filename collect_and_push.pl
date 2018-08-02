@@ -10,6 +10,7 @@ my $KUBERNETES_TOKEN;
 my $KUBERNETES_ADDRESS;
 my $KUBERNETES_PORT;
 my $LOG_LEVEL=0;
+my $NODE_NAME=$ARGV[0] or die ("No node name associated");
 
 sub validateEnvironmentVariables{
    if(!defined $ENV{'KUBERNETES_CUSTOM_TOKEN'}){
@@ -46,16 +47,16 @@ sub validateEnvironmentVariables{
          $KUBERNETES_PORT = $ENV{'KUBERNETES_PORT_443_TCP_PORT'};
       }
    } else{
-         $KUBERNETES_PORT = $ENV{'KUBERNETES_CUSTOM_PORT'};
+      $KUBERNETES_PORT = $ENV{'KUBERNETES_CUSTOM_PORT'};
    }
 
    if(!defined $ENV{'INFLUXDB_ADDRESS'} || !defined $ENV{'INFLUXDB_PORT'} || !defined $ENV{'INFLUXDB_USERNAME'} || !defined $ENV{'INFLUXDB_PASSWORD'} || !defined $ENV{'INFLUXDB_DATABASE'}){
       die("InfluxDB environment variables are not set correctly!");
    }
 
-   if(!defined $ENV{'NODE_NAME'}){
-      die("\$NODE_NAME is not set!"); 
-   }
+#   if(!defined $ENV{'NODE_NAME'}){
+#      die("\$NODE_NAME is not set!"); 
+#   }
 
    if(defined $ENV{'LOG_LEVEL'}){
       $LOG_LEVEL=$ENV{'LOG_LEVEL'});
@@ -72,7 +73,7 @@ sub getMetrics{
    my $curl = WWW::Curl::Easy->new;
 
    my @headers  = ("Authorization: Bearer $KUBERNETES_TOKEN");
-   my $URL = "https://$KUBERNETES_ADDRESS:$KUBERNETES_PORT/api/v1/nodes/$ENV{'NODE_NAME'}/proxy/metrics/cadvisor";
+   my $URL = "https://$KUBERNETES_ADDRESS:$KUBERNETES_PORT/api/v1/nodes/$NODE_NAME/proxy/metrics/cadvisor";
 
    $curl->setopt(CURLOPT_HEADER,1);
    $curl->setopt(CURLOPT_HTTPHEADER, \@headers);
@@ -116,10 +117,10 @@ sub generateQuery{
             my $val = sprintf("%.20g", $3);
             my $metadata = $2;
             $metadata =~ s/\s/_/g;
-            $query .= "$measurement,node_name=$ENV{NODE_NAME},$metadata value=$val $GLOBAL_TIMESTAMP\n";
+            $query .= "$measurement,node_name=$NODE_NAME,$metadata value=$val $GLOBAL_TIMESTAMP\n";
          } elsif(/^([A-Za-z0-9_-]+?)\s+(.*?)$/) {
             my $val = sprintf("%.20g", $2);
-            $query .= "$1,node_name=$ENV{NODE_NAME} value=$val $GLOBAL_TIMESTAMP\n";
+            $query .= "$1,node_name=$NODE_NAME value=$val $GLOBAL_TIMESTAMP\n";
          }
       }
    }
