@@ -59,7 +59,7 @@ sub validateEnvironmentVariables{
 #   }
 
    if(defined $ENV{'LOG_LEVEL'}){
-      $LOG_LEVEL=$ENV{'LOG_LEVEL'});
+      $LOG_LEVEL=$ENV{'LOG_LEVEL'};
    }
 
    return 1;
@@ -91,7 +91,7 @@ sub getMetrics{
       
    if ($retcode == 0) {
       if( $LOG_LEVEL > 0 ){
-         print("Transfer went ok\n");
+         print("Metrics request/response succeed!\n");
       }
       my $response_code = $curl->getinfo(CURLINFO_HTTP_CODE);
 
@@ -153,18 +153,18 @@ sub pushToInfluxDB{
       
    if ($retcode == 0) {
       if( $LOG_LEVEL > 0 ){
-         print("Transfer went ok\n");
+         print("InfluxDB request/response succeed!\n");
       }
       my $response_code = $curl->getinfo(CURLINFO_HTTP_CODE);
 
-      if( $response_code != 200 || $response_code != 204 ){
-         die("Error with response code: $response_code\n");
+      if( $response_code != 200 && $response_code != 204 ){
+         die("Response error from InfluxDB: Error with response code: $response_code\n");
       }
    } else {
-      die("An error happened: $retcode ".$curl->strerror($retcode)." ".$curl->errbuf."\n");
+      die("Error communicating with InfluxDB: An error happened: $retcode ".$curl->strerror($retcode)." ".$curl->errbuf."\n");
    }
 
-   return $response_body;
+   return 1;
 }
 
 if( validateEnvironmentVariables() ){
@@ -181,5 +181,9 @@ if( validateEnvironmentVariables() ){
       close $fh;
    }
    
-   pushToInfluxDB($query);
+   my $response = pushToInfluxDB($query);
+   
+   if( $response && $LOG_LEVEL > 0 ){
+      print("Metrics for $NODE_NAME successfully pushed to InfluxDB!\n");
+   }
 }
