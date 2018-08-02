@@ -5,4 +5,4 @@ RUN apt-get update
 RUN apt-get install -y libwww-curl-perl
 #RUN curl -L http://cpanmin.us | perl - App::cpanminus
 #RUN cpanm WWW::Curl::Easy
-RUN /opt/daemon.sh
+ENTRYPOINT /opt/daemon.sh
