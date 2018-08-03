@@ -1,4 +1,4 @@
-FROM perl:latest
+FROM perl:5.005
 MAINTAINER Michel Gokan michel@gokan.me
 COPY collect_and_push.pl daemon.sh /opt/
 #install-curl.sh install-curl-1.sh install-curl-1-2.sh install-curl2.sh /opt/
