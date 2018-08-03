@@ -7,16 +7,17 @@ RUN apt-get install -y wget curl build-essential autoconf patch libmodule-instal
 #libcurl4-openssl-dev
 #RUN curl -L http://cpanmin.us | perl - App::cpanminus
 RUN export PERL_MM_USE_DEFAULT=1
-#RUN cpan install Module::Install
+#RUN cpanm install WWW::Curl::Easy
 RUN cd /
 RUN wget https://cpan.metacpan.org/authors/id/S/SZ/SZBALINT/WWW-Curl-4.17.tar.gz -P /opt/
 RUN tar -xzf /opt/WWW-Curl-4.17.tar.gz -C /opt/
-RUN export PERL5LIB=$PERL5LIB:/opt/WWW-Curl-4.17/inc
+#RUN export PERL5LIB=$PERL5LIB:/opt/WWW-Curl-4.17/inc
 RUN wget https://rt.cpan.org/Public/Ticket/Attachment/1668211/895272/WWW-Curl-4.17-Skip-preprocessor-symbol-only-CURL_STRICTER.patch -P /opt/WWW-Curl-4.17
 RUN cd /opt/WWW-Curl-4.17 && patch < WWW-Curl-4.17-Skip-preprocessor-symbol-only-CURL_STRICTER.patch
 COPY curl.patch /opt/WWW-Curl-4.17/
 RUN cd /opt/WWW-Curl-4.17 && patch < curl.patch
-RUN cd /opt/WWW-Curl-4.17 && perl Makefile.PL
+RUN find /usr | grep curl.h
+RUN cd /opt/WWW-Curl-4.17 && perl Makefile.PL /usr/include/x86_64-linux-gnu/
 RUN cd /opt/WWW-Curl-4.17 && make
 RUN cd /opt/WWW-Curl-4.17 && make install
 #RUN /opt/install-curl.sh
