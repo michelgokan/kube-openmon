@@ -1,4 +1,4 @@
-FROM perl:5.005
+FROM perl:latest
 MAINTAINER Michel Gokan michel@gokan.me
 COPY collect_and_push.pl daemon.sh /opt/
 #install-curl.sh install-curl-1.sh install-curl-1-2.sh install-curl2.sh /opt/
@@ -12,7 +12,7 @@ RUN wget https://cpan.metacpan.org/authors/id/S/SZ/SZBALINT/WWW-Curl-4.17.tar.gz
 RUN tar -xzf /opt/WWW-Curl-4.17.tar.gz -C /opt/
 RUN wget https://rt.cpan.org/Public/Ticket/Attachment/1668211/895272/WWW-Curl-4.17-Skip-preprocessor-symbol-only-CURL_STRICTER.patch -P /opt/WWW-Curl-4.17
 RUN cd /opt/WWW-Curl-4.17 && patch < WWW-Curl-4.17-Skip-preprocessor-symbol-only-CURL_STRICTER.patch
-RUN perl /opt/WWW-Curl-4.17/Makefile.PL
+RUN cd /opt/WWW-Curl-4.17 && perl Makefile.PL
 RUN cd /opt/WWW-Curl-4.17 && make
 RUN cd /opt/WWW-Curl-4.17 && make install
 #RUN /opt/install-curl.sh
