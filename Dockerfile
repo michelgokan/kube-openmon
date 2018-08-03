@@ -6,6 +6,7 @@ RUN apt-get update
 RUN apt-get install -y wget curl build-essential autoconf patch libwww-curl-perl libcurl4-openssl-dev unzip 
 #RUN curl -L http://cpanmin.us | perl - App::cpanminus
 RUN export PERL_MM_USE_DEFAULT=1
+RUN cpan install Module::Install
 RUN cd /
 RUN wget https://cpan.metacpan.org/authors/id/S/SZ/SZBALINT/WWW-Curl-4.17.tar.gz -P /opt/
 RUN tar -xzf /opt/WWW-Curl-4.17.tar.gz -C /opt/
