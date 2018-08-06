@@ -6,7 +6,7 @@ else
    SLEEP_TIME="${MONITORING_INTERVAL}"
 fi
 
-nodes=`curl https://${KUBERNETES_PORT_443_TCP_ADDR}:${KUBERNETES_PORT_443_TCP_PORT}/api/v1/nodes/ --header "Authorization: Bearer $TOKEN" --insecure | awk '$1 ~ /^\"name\":$/{ gsub("\"","",$2); gsub(",","",$2); print $2 }'`
+nodes=`curl https://${KUBERNETES_PORT_443_TCP_ADDR}:${KUBERNETES_PORT_443_TCP_PORT}/api/v1/nodes/ --header "Authorization: Bearer ${KUBERNETES_CUSTOM_TOKEN}" --insecure | awk '$1 ~ /^\"name\":$/{ gsub("\"","",$2); gsub(",","",$2); print $2 }'`
 
 
 while :
