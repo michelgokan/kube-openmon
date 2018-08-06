@@ -25,6 +25,8 @@ spec:
              value: "1"
            - name: LOG_LEVEL
              value: "1"
+           - name: ENABLED
+             value: "1"
 #           - name: KUBERNETES_CUSTOM_ADDRESS
 #             value: ""
 #           - name: KUBERNETES_CUSTOM_PORT

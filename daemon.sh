@@ -13,7 +13,11 @@ while :
 do
    for word in $nodes
    do
-      perl /opt/collect_and_push.pl $word & 
+      if [ "${ENABLED}" == "1" ]; then
+         perl /opt/collect_and_push.pl $word & 
+      else
+         echo "Disabled!"
+      fi
    done
    sleep $SLEEP_TIME
 done
