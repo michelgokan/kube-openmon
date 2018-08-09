@@ -32,7 +32,7 @@ spec:
 #           - name: KUBERNETES_CUSTOM_PORT
 #             value: ""
            - name: INFLUXDB_ADDRESS
-             value: "172.16.16.242"
+             value: "influx-influxdb.kube-system"
            - name: INFLUXDB_PORT
              value: "8086"
            - name: INFLUXDB_USERNAME
@@ -42,4 +42,4 @@ spec:
            - name: INFLUXDB_DATABASE
              value: "kubernetes_michel"
            - name: KUBERNETES_CUSTOM_TOKEN
-             value: "eyJhbGciOiJSUzI1NiIsImtpZCI6IiJ9.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJkZWZhdWx0Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZWNyZXQubmFtZSI6ImthdWFkbWluLXRva2VuLW1zZ2Y3Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQubmFtZSI6ImthdWFkbWluIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQudWlkIjoiYzg0ZTM5MDktN2Y5NC0xMWU4LWE0Y2ItZmExNjNlNmI2NTk3Iiwic3ViIjoic3lzdGVtOnNlcnZpY2VhY2NvdW50OmRlZmF1bHQ6a2F1YWRtaW4ifQ.MixqWWVr2C4qy_44hIr1bZo5dkSqqppKEFyY2rMxi7a2xFUr_MsNkp5gB81drbtSiFUEeN51pG25E5HGeoHHwbE-dpjR17Mp4TvTwaPLT63sRruzBy7uxeD1JaEw6gedKASBrOVDt3vu-7X7NKYac3aFk39kuoK5IlJN0oX4AstDJHSCx1yYwfeSW6sY9AnJvGXdFJ-vnA2ToQnrEz-Ytv_yNBo0pdb2zzIBE6KMecGWlQqEm2n6BIiSaDtAXNZKHgPFepOJA-5aGLsyqNW4R_JnaOlFhSVp4LvsTJI_JjVIVQIfMcR81JLGdkxNtessPH8JVfU9Ocy_Y3GMEyu7Lw"
+             value: "eyJhbGciOiJSUzI1NiIsImtpZCI6IiJ9.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJkZWZhdWx0Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZWNyZXQubmFtZSI6Im15YWRtaW4tdG9rZW4td3RrN2siLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC5uYW1lIjoibXlhZG1pbiIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50LnVpZCI6Ijc1MDhlOGM4LTliYzMtMTFlOC05OTIzLTA4MDAyNzk5YTVmZCIsInN1YiI6InN5c3RlbTpzZXJ2aWNlYWNjb3VudDpkZWZhdWx0Om15YWRtaW4ifQ.aQGWYNQ_HwjrKsM5r98uEl7XhfdYP7GX96kpN7p0emlIeVLT4bEpKUI_MafvBHflMmSJQPTXZ0tdDe6wLjuXTQ3gE-SoVlqmztdpywJ6V_H6s9Eugl6rEzIHwUw04J3TZSk4kRskb17P3ljIAqPxa1gu5TIif0b0tdEmliqs1-JpJcTZ2GQCKLLsg6axxnUDncho1g4dqRxZ7au1IljkbdowBtuv5EE3OFuwbk8-6-m_TDAx2fIH11mFCg5KSDWUKBmcak6Lp23PDL4LUWxvpsJjAuoZNdkVhJcrsVXMjneIWNW4Z3QlxrRPXYAnKzAMu-tpJfJV2sDRUJmE489ngw"
