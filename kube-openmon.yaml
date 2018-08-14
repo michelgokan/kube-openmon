@@ -32,7 +32,7 @@ spec:
 #           - name: KUBERNETES_CUSTOM_PORT
 #             value: ""
            - name: INFLUXDB_ADDRESS
-             value: "influx-influxdb.kube-system"
+             value: "influxdb-influxdb.kube-system"
            - name: INFLUXDB_PORT
              value: "8086"
            - name: INFLUXDB_USERNAME
