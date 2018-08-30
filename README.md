@@ -1,6 +1,6 @@
 # Installation Guide
 
-## Variables to set
+## Configuring Environment Variables
 
 Open `kube-openmon.yaml` file and set the following variables:
 
