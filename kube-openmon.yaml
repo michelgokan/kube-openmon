@@ -22,24 +22,28 @@ spec:
           image: michelgokan/kube-openmon
           env:
            - name: MONITORING_INTERVAL
-             value: "1"
+             value: "{MONITORING_INTERVAL}"
            - name: LOG_LEVEL
-             value: "1"
+             value: "{LOG_LEVEL}"
            - name: ENABLED
-             value: "1"
+             value: "{ENABLED}"
 #           - name: KUBERNETES_CUSTOM_ADDRESS
-#             value: ""
+#             value: "{KUBERNETES_CUSTOM_ADDRESS}"
 #           - name: KUBERNETES_CUSTOM_PORT
-#             value: ""
+#             value: "{KUBERNETES_CUSTOM_PORT}"
+#           - name: INFLUXDB_ADDRESS
+#             value: "influxdb-influxdb.kube-system"
+#           - name: INFLUXDB_PORT
+#             value: "8086"
            - name: INFLUXDB_ADDRESS
-             value: "influxdb-influxdb.kube-system"
+             value: "{INFLUXDB_ADDRESS}"
            - name: INFLUXDB_PORT
-             value: "8086"
+             value: "{INFLUXDB_PORT}"
            - name: INFLUXDB_USERNAME
-             value: ""
+             value: "{INFLUXDB_USERNAME}"
            - name: INFLUXDB_PASSWORD
-             value: ""
+             value: "{INFLUXDB_PASSWORD}"
            - name: INFLUXDB_DATABASE
-             value: "kubernetes_michel"
+             value: "{INFLUXDB_DATABASE}"
            - name: KUBERNETES_CUSTOM_TOKEN
-             value: "eyJhbGciOiJSUzI1NiIsImtpZCI6IiJ9.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJkZWZhdWx0Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZWNyZXQubmFtZSI6Im15YWRtaW4tdG9rZW4td3RrN2siLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC5uYW1lIjoibXlhZG1pbiIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50LnVpZCI6Ijc1MDhlOGM4LTliYzMtMTFlOC05OTIzLTA4MDAyNzk5YTVmZCIsInN1YiI6InN5c3RlbTpzZXJ2aWNlYWNjb3VudDpkZWZhdWx0Om15YWRtaW4ifQ.aQGWYNQ_HwjrKsM5r98uEl7XhfdYP7GX96kpN7p0emlIeVLT4bEpKUI_MafvBHflMmSJQPTXZ0tdDe6wLjuXTQ3gE-SoVlqmztdpywJ6V_H6s9Eugl6rEzIHwUw04J3TZSk4kRskb17P3ljIAqPxa1gu5TIif0b0tdEmliqs1-JpJcTZ2GQCKLLsg6axxnUDncho1g4dqRxZ7au1IljkbdowBtuv5EE3OFuwbk8-6-m_TDAx2fIH11mFCg5KSDWUKBmcak6Lp23PDL4LUWxvpsJjAuoZNdkVhJcrsVXMjneIWNW4Z3QlxrRPXYAnKzAMu-tpJfJV2sDRUJmE489ngw"
+             value: "{KUBERNETES_CUSTOM_TOKEN}"
