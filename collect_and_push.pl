@@ -158,7 +158,7 @@ sub pushToInfluxDB{
       my $response_code = $curl->getinfo(CURLINFO_HTTP_CODE);
 
       if( $response_code != 200 && $response_code != 204 ){
-         die("Response error from InfluxDB: Error with response code: $response_code\n");
+         die("Response error from InfluxDB ($url): Error with response code: $response_code\n");
       }
    } else {
       die("Error communicating with InfluxDB: An error happened: $retcode ".$curl->strerror($retcode)." ".$curl->errbuf."\n");
