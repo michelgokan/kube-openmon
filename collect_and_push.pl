@@ -184,6 +184,6 @@ if( validateEnvironmentVariables() ){
    my $response = pushToInfluxDB($query);
    
    if( $response && $LOG_LEVEL > 0 ){
-      print("Metrics for $NODE_NAME successfully pushed to InfluxDB at $URL!\n");
+      print("Metrics for $NODE_NAME successfully pushed to InfluxDB at http://$ENV{'INFLUXDB_ADDRESS'}:$ENV{'INFLUXDB_PORT'}/write?db=$ENV{'INFLUXDB_DATABASE'}!\n");
    }
 }
