@@ -19,6 +19,7 @@ do
          nodeAllocatableResources=`printf "$nodesInfo" | jq ".items[] | select(.metadata.name == \"$node\") | .status.allocatable"`
          nodeAllocatableCPU=`printf "$nodeAllocatableResources" | jq -r '.cpu'`
          nodeAllocatableMemory=`printf "$nodeAllocatableResources" | jq -r '.memory'`
+         nodeAllocatableMemory=${nodeAllocatableMemory%??}
          nodeAllocatableDisk=`printf "$nodeAllocatableResources" | jq -r '."ephemeral-storage"'`
 
          perl /opt/collect_and_push.pl $node $nodeAllocatableCPU $nodeAllocatableMemory $nodeAllocatableDisk &
