@@ -21,6 +21,10 @@ do
          nodeAllocatableMemory=`printf "$nodesAllocatableResources" | jq -r '.memory'`
          nodeAllocatableDisk=`printf "$nodesAllocatableResources" | jq -r '.ephemeral-storage'`
 
+         echo $nodeAllocatableCPU
+         echo $nodeAllocatableMemory
+         echo $nodeAllocatableDisk
+
          perl /opt/collect_and_push.pl $node $nodeAllocatableCPU $nodeAllocatableMemory $nodeAllocatableDisk &
       else
          echo "Disabled!"
