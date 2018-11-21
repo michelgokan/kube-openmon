@@ -3,7 +3,7 @@ MAINTAINER Michel Gokan michel@gokan.me
 COPY collect_and_push.pl daemon.sh /opt/
 #install-curl.sh install-curl-1.sh install-curl-1-2.sh install-curl2.sh /opt/
 RUN apt-get update
-RUN apt-get install -y wget curl build-essential autoconf patch libmodule-install-perl libwww-curl-perl unzip libcurl4-gnutls-dev
+RUN apt-get install -y wget curl build-essential autoconf patch libmodule-install-perl libwww-curl-perl unzip libcurl4-gnutls-dev jq
 #libcurl4-openssl-dev
 #RUN curl -L http://cpanmin.us | perl - App::cpanminus
 RUN export PERL_MM_USE_DEFAULT=1

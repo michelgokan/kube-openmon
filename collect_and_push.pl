@@ -11,6 +11,9 @@ my $KUBERNETES_ADDRESS;
 my $KUBERNETES_PORT;
 my $LOG_LEVEL=0;
 my $NODE_NAME=$ARGV[0] or die ("No node name associated");
+my $NODE_ALLOCATABLE_CPU=$ARGV[1] or die ("No node allocatable CPU information associated");
+my $NODE_ALLOCATABLE_MEMORY=$ARGV[2] or die ("No node allocatable Memory information associated");
+my $NODE_ALLOCATABLE_DISK=$ARGV[3] or die ("No node allocatable Disk information associated");
 
 sub validateEnvironmentVariables{
    if(!defined $ENV{'KUBERNETES_CUSTOM_TOKEN'}){
@@ -93,6 +96,7 @@ sub getMetrics{
       if( $LOG_LEVEL > 0 ){
          print("Metrics request/response succeed!\n");
       }
+
       my $response_code = $curl->getinfo(CURLINFO_HTTP_CODE);
 
       if( $response_code != 200 ){
@@ -124,6 +128,11 @@ sub generateQuery{
          }
       }
    }
+
+   $query .= "node_allocatable_cpu,node_name=$NODE_NAME value=$NODE_ALLOCATABLE_CPU $GLOBAL_TIMESTAMP\n";
+   $query .= "node_allocatable_memory,node_name=$NODE_NAME value=$NODE_ALLOCATABLE_MEMORY $GLOBAL_TIMESTAMP\n";
+   $query .= "node_allocatable_disk,node_name=$NODE_NAME value=$NODE_ALLOCATABLE_DISK $GLOBAL_TIMESTAMP\n";
+
    return $query;
 }
 
