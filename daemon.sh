@@ -17,9 +17,9 @@ do
    do
       if [ "${ENABLED}" == "1" ]; then
          nodeAllocatableResources=`printf "$nodesInfo" | jq ".items[] | select(.metadata.name == \"$node\") | .status.allocatable"`
-         nodeAllocatableCPU=`printf "$nodesAllocatableResources" | jq -r '.cpu'`
-         nodeAllocatableMemory=`printf "$nodesAllocatableResources" | jq -r '.memory'`
-         nodeAllocatableDisk=`printf "$nodesAllocatableResources" | jq -r '.ephemeral-storage'`
+         nodeAllocatableCPU=`printf "$nodeAllocatableResources" | jq -r '.cpu'`
+         nodeAllocatableMemory=`printf "$nodeAllocatableResources" | jq -r '.memory'`
+         nodeAllocatableDisk=`printf "$nodeAllocatableResources" | jq -r '.ephemeral-storage'`
 
          echo $nodeAllocatableCPU
          echo $nodeAllocatableMemory
